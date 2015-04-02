@@ -1,4 +1,4 @@
-package automata;
+package graphex;
 
 /**
  * Class to represent a connection between two states in

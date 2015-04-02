@@ -1,4 +1,4 @@
-package automata;
+package graphex;
 
 import java.util.Set;
 

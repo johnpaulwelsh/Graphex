@@ -1,4 +1,4 @@
-package automata;
+package graphex;
 
 /**
  * Class for some utility functions.

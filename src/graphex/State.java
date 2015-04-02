@@ -1,4 +1,4 @@
-package automata;
+package graphex;
 
 /**
  * A class to represent a state in a finite automata.
