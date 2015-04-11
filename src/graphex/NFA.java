@@ -1,32 +1,52 @@
 package graphex;
 
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
- * Class to represent a nondeterministic finite automata.
+ * Class to represent a nondeterministic finite automaton.
  *
  * @author John Paul Welsh
  */
 public class NFA {
-    private Set<State> states;
-    private Set<String> alphabet;
+    private Set<State>      states;
+    private Set<String>     alphabet;
     private Set<Connection> transitionFunction;
-    private State startingState;
-    private Set<State> acceptStates;
+    private State           startingState;
+    private Set<State>      acceptStates;
 
-    public NFA(Set<State> states,
-               Set<String> alphabet,
+    public NFA(Set<State>      states,
+               Set<String>     alphabet,
                Set<Connection> transitionFunction,
-               State startingState,
-               Set<State> acceptStates) {
-        this.states = states;
+               State           startingState,
+               Set<State>      acceptStates) {
+        this.states   = states;
         this.alphabet = alphabet;
         this.alphabet.add("epsilon");
         this.transitionFunction = transitionFunction;
-        this.startingState = startingState;
-        this.acceptStates = acceptStates;
+        this.startingState      = startingState;
+        this.acceptStates       = acceptStates;
     }
 
+    //
+    // Specific Boolean Getters
+    //
+
+    public boolean hasInAcceptStates(State s) {
+        return states.contains(s);
+    }
+
+    public boolean hasAsStartState(State s) {
+        return startingState.equals(s);
+    }
+
+    public boolean hasInAlphabet(String a) {
+        return alphabet.contains(a);
+    }
+
+    //
+    // Typical Getters and Setters
+    //
 
     public Set<State> getStates() {
         return states;

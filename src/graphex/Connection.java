@@ -2,20 +2,20 @@ package graphex;
 
 /**
  * Class to represent a connection between two states in
- * a finite automata, and the input string that it takes
+ * a finite automata, and the input character that it takes
  * to get from the first state to the second.
  *
  * @author John Paul Welsh
  */
 public class Connection {
-    private State fromState;
+    private State  fromState;
     private String input;
-    private State toState;
+    private State  toState;
 
     public Connection(State fromState, String input, State toState) {
         this.fromState = fromState;
-        this.input = input;
-        this.toState = toState;
+        this.input     = input;
+        this.toState   = toState;
     }
 
     public State getFromState() {

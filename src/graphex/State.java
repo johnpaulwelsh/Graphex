@@ -1,7 +1,7 @@
 package graphex;
 
 /**
- * A class to represent a state in a finite automata.
+ * A class to represent a state in a finite automaton.
  *
  * @author John Paul Welsh
  */
