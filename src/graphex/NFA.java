@@ -1,7 +1,6 @@
 package graphex;
 
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Class to represent a nondeterministic finite automaton.

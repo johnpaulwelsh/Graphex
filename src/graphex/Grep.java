@@ -1,32 +1,38 @@
 package graphex;
 
-
+/**
+ * Entry point for the program, fool.
+ *
+ * @author John Paul Welsh
+ */
 public class Grep {
 
-    public static void regexToNfa() {
+    private static void withNfaFile(String[] args) {
 
     }
 
-    public static void nfaToDfa() {
+    private static void withDfaFile(String[] args) {
 
     }
 
-    public static boolean solveWithDfa(String input) {
-        return true;
+    private static void withBothFiles(String[] args) {
+
     }
 
-    public static String applyAutomataToInput(String input) {
-        boolean accept = solveWithDfa(input);
-        return accept ? input : "";
+    private static void withNoFiles(String[] args) {
+
     }
 
     public static void main(String[] args) {
-	    Utils.println("dingo");
-
-        // args
-        // 0 -> "-n"       | "-d"       | "REGEX"
-        // 1 -> "NFA-FILE" | "DFA-FILE" | "FILE"
-        // 2 -> REGEX
-        // 3 -> FILE
+        if (args[0].equals("-n")) {
+            if (args[2].equals("-d"))
+                withBothFiles(args);
+            else
+                withNfaFile(args);
+        } else if (args[0].equals("-d")) {
+            withDfaFile(args);
+        } else {
+            withNoFiles(args);
+        }
     }
 }

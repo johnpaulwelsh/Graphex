@@ -23,9 +23,8 @@ public class DFA extends NFA {
     }
 
     /**
-     * Given a "from" state and a transition character,
-     * returns the state resulting from following that
-     * transition.
+     * Given a "from" state and a transition character, returns the
+     * state resulting from following that transition.
      *
      * @param from  the starting state for this connection
      * @param input the input character symbol for the connection
@@ -40,6 +39,15 @@ public class DFA extends NFA {
     // Specific Getters
     //
 
+    /**
+     * Given a "from" state and a transition character, returns the
+     * transition function that maps that state, through that character,
+     * to another state.
+     *
+     * @param from  the starting state for this connection
+     * @param input the input character symbol for the connection
+     * @return      the connection that features these members
+     */
     public Connection getTransitionFromStateWithInput(State from, String input) {
         for (Connection c : this.getTransitionFunction()) {
             if (c.getFromState().equals(from) && c.getInput().equals(input)) {
