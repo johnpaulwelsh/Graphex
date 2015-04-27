@@ -20,7 +20,7 @@ public class Grep {
     }
 
     private static void withNoFiles(String[] args) {
-
+        Parser p = new Parser(args[0]);
     }
 
     public static void main(String[] args) {

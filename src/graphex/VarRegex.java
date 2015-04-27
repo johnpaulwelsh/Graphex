@@ -7,8 +7,14 @@ package graphex;
  * @author John Paul Welsh
  */
 public class VarRegex implements Variable {
+    private String str;
 
-    public VarRegex() {
-        
+    public VarRegex(String s) {
+        this.str = s;
+    }
+
+    @Override
+    public String getString() {
+        return str;
     }
 }

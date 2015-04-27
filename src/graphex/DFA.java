@@ -13,7 +13,7 @@ public class DFA extends NFA {
 
     private Set<State> states;
 
-    public DFA(Set<State>    states,
+    public DFA(Set<State>       states,
                 Set<String>     alphabet,
                 Set<Connection> transitionFunction,
                 State           startingState,

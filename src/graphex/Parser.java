@@ -13,7 +13,6 @@ public class Parser {
 
     public Parser(String s) {
         this.str = consolidateStars(s);
-        parse(this.str);
     }
 
     public String consolidateStars(String s) {
@@ -21,22 +20,6 @@ public class Parser {
             s = s.replace("**", "*");
         }
         return s;
-    }
-
-    public void parse(String s) {
-        char curr;
-        int i = 0;
-        while (i < s.length()) {
-            curr = s.charAt(i);
-
-            if (curr == '(') {
-
-            } else if (curr == '*') {
-
-            } else {
-
-            }
-        }
     }
 
     /*

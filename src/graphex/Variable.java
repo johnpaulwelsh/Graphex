@@ -7,4 +7,10 @@ package graphex;
  * @author John Paul Welsh
  */
 public interface Variable {
+    /**
+     * Method to return the string that the variable uses.
+     *
+     * @return the string contained in the variable
+     */
+    String getString();
 }
