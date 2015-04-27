@@ -1,22 +1,22 @@
 package graphex;
 
 /**
- * A class to represent a state in a finite automaton.
+ * Interface for a state in a finite automaton.
  *
  * @author John Paul Welsh
  */
-public class State {
-    private String name;
+public interface State {
+    /**
+     * Returns the name of the state.
+     *
+     * @return the name of the state
+     */
+    String getName();
 
-    public State(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    /**
+     * Updates the name of the state.
+     *
+     * @param newName the new name for the state
+     */
+    void setName(String newName);
 }

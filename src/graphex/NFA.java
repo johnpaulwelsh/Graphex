@@ -11,13 +11,13 @@ public class NFA {
     private Set<State>      states;
     private Set<String>     alphabet;
     private Set<Connection> transitionFunction;
-    private State           startingState;
+    private State startingState;
     private Set<State>      acceptStates;
 
     public NFA(Set<State>      states,
                Set<String>     alphabet,
                Set<Connection> transitionFunction,
-               State           startingState,
+               State startingState,
                Set<State>      acceptStates) {
         this.states   = states;
         this.alphabet = alphabet;

@@ -8,9 +8,9 @@ package graphex;
  * @author John Paul Welsh
  */
 public class Connection {
-    private State  fromState;
+    private State fromState;
     private String input;
-    private State  toState;
+    private State toState;
 
     public Connection(State fromState, String input, State toState) {
         this.fromState = fromState;

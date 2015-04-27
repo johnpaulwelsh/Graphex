@@ -11,7 +11,9 @@ import java.util.Set;
  */
 public class DFA extends NFA {
 
-    public DFA(Set<State>       states,
+    private Set<State> states;
+
+    public DFA(Set<State>    states,
                 Set<String>     alphabet,
                 Set<Connection> transitionFunction,
                 State           startingState,
