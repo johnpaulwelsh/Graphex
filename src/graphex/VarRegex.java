@@ -1,20 +1,25 @@
 package graphex;
 
-/**
- * Class to represent a 'regex' variable in the CFG
- * used to parse the input regex-string.
- *
- * @author John Paul Welsh
- */
 public class VarRegex implements Variable {
-    private String str;
+    private VarBlock block;
+    private boolean hasPipe;
+    private VarRegex regex;
+    private NFA nfa;
 
-    public VarRegex(String s) {
-        this.str = s;
+    public VarRegex() {
+        char c = Parser.regex.get(0);
+        block = new VarBlock();
     }
 
-    @Override
-    public String getString() {
-        return str;
+    public void makeNFA() {
+        nfa = combineBlockAndRegexNFA();
+    }
+
+    public NFA getNFA() {
+        return nfa;
+    }
+
+    private NFA combineBlockAndRegexNFA() {
+
     }
 }
