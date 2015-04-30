@@ -32,6 +32,12 @@ public class Parser {
         alphabet = new HashSet<Character>();
     }
 
+    /**
+     * Folds all doubled-up stars in the regex string into one star.
+     *
+     * @param s the regex string
+     * @return  the altered string, with only single stars
+     */
     public String consolidateStars(String s) {
         while(s.contains("**")) {
             s = s.replace("**", "*");
@@ -39,7 +45,14 @@ public class Parser {
         return s;
     }
 
-    public void learnAlphabet(String path) { // called from Grep
+    /**
+     * Reads through input file one character at a time, adding
+     * each new character to a Set of characters. Removes newlines
+     * because they don't count. Called in Grep.
+     *
+     * @param path the file path to the input file
+     */
+    public void learnAlphabet(String path) {
         try {
             int ch;
             BufferedInputStream bis = new BufferedInputStream(
@@ -69,20 +82,16 @@ public class Parser {
      * top-level NFA.
      */
     public void parse() {
-        // Makes the parse-tree
+        // Makes the parse-tree (super recursion)
         regexTree = new VarRegex();
-        //
+        // Tell the parse-tree to make an NFA of itself (also super-recursion)
         regexTree.makeNFA();
-        //
+        // Sets the parse-tree's NFA to be our NFA
         nfa = getParsedNFA();
     }
 
     public List<Character> getRegex() {
         return regex;
-    }
-
-    public Set<Character> getAlphabet() {
-        return alphabet;
     }
 
     public NFA getParsedNFA() {

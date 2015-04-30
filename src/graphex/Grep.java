@@ -1,5 +1,7 @@
 package graphex;
 
+import java.util.Set;
+
 /**
  * Entry point for the program, fool.
  *
@@ -12,6 +14,10 @@ public class Grep {
 
     public static String makeNextStateName() {
         return "s" + stateName++;
+    }
+
+    public static Set<State> makePowerSetOfNFAStates(Set<State> nfaStates) {
+        return null;
     }
 
     private static void withNfaFile(String[] args) {

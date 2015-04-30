@@ -10,7 +10,9 @@ public class VarBase implements Variable {
 
     /**
      * A Base removes the character it's been given no matter what,
-     * and if it's a ( it will make
+     * and if it's a ( it will make a new regex. Base is one or the
+     * other, unlike the other productions, so if regex is null then
+     * we know we have a character-based NFA.
      */
     public VarBase() {
         if (Parser.regex.size() > 0) {
@@ -30,6 +32,7 @@ public class VarBase implements Variable {
 
     @Override
     public void makeNFA() {
+        // If the regex member is null, then we have a character literal.
         if (regex == null) {
             NFAState s0 = new NFAState(Grep.makeNextStateName());
             NFAState s1 = new NFAState(Grep.makeNextStateName());
@@ -39,19 +42,19 @@ public class VarBase implements Variable {
             states.add(s0);
             states.add(s1);
 
-            Set<Character> alphabet = Parser.alphabet;
-
             Set<Connection> transitionFunction = new HashSet<Connection>();
             transitionFunction.add(c);
-
-            State start = s0;
 
             Set<State> accepts = new HashSet<State>();
             accepts.add(s1);
 
-            this.nfa = new NFA(states, alphabet, transitionFunction, start, accepts);
-        } else {
+            this.nfa = new NFA(states, Parser.alphabet, transitionFunction, s0, accepts);
 
+        // Otherwise, we do NOT have a character literal and therefore have
+        // a grouping with a regex inside it.
+        } else {
+            regex.makeNFA();
+            this.nfa = regex.getNFA();
         }
     }
 
