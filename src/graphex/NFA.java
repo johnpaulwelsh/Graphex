@@ -9,19 +9,19 @@ import java.util.Set;
  */
 public class NFA {
     private Set<State>      states;
-    private Set<String>     alphabet;
+    private Set<Character>  alphabet;
     private Set<Connection> transitionFunction;
     private State           startingState;
     private Set<State>      acceptStates;
 
     public NFA(Set<State>      states,
-               Set<String>     alphabet,
+               Set<Character>  alphabet,
                Set<Connection> transitionFunction,
                State           startingState,
                Set<State>      acceptStates) {
         this.states   = states;
         this.alphabet = alphabet;
-        this.alphabet.add("epsilon");
+        this.alphabet.add(Grep.epsilon);
         this.transitionFunction = transitionFunction;
         this.startingState      = startingState;
         this.acceptStates       = acceptStates;
@@ -39,13 +39,10 @@ public class NFA {
         return startingState.equals(s);
     }
 
-    public boolean hasInAlphabet(String a) {
+    public boolean hasInAlphabet(char a) {
         return alphabet.contains(a);
     }
 
-    //
-    // Typical Getters and Setters
-    //
 
     public Set<State> getStates() {
         return states;
@@ -55,11 +52,11 @@ public class NFA {
         this.states = states;
     }
 
-    public Set<String> getAlphabet() {
+    public Set<Character> getAlphabet() {
         return alphabet;
     }
 
-    public void setAlphabet(Set<String> alphabet) {
+    public void setAlphabet(Set<Character> alphabet) {
         this.alphabet = alphabet;
     }
 

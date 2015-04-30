@@ -21,11 +21,12 @@ public class VarBlock implements Variable {
 
     @Override
     public void makeNFA() {
-
+        factor.makeNFA();
+        nfa = factor.getNFA();
     }
 
     @Override
     public NFA getNFA() {
-        return null;
+        return this.nfa;
     }
 }

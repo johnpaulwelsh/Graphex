@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Class that can parse an input string
@@ -17,7 +19,7 @@ import java.util.List;
  */
 public class Parser {
     public static List<Character> regex;
-    private List<Character> alphabet;
+    public static Set<Character> alphabet;
     private VarRegex regexTree;
     private NFA nfa;
 
@@ -27,7 +29,7 @@ public class Parser {
         for (char c : noDoubleStars.toCharArray()) {
             regex.add(c);
         }
-        alphabet = new ArrayList<Character>();
+        alphabet = new HashSet<Character>();
     }
 
     public String consolidateStars(String s) {
@@ -48,6 +50,9 @@ public class Parser {
                     alphabet.add(chch);
                 }
             }
+
+            alphabet.remove('\n');
+
             bis.close();
 
         } catch (FileNotFoundException fnf) {
@@ -57,20 +62,30 @@ public class Parser {
         }
     }
 
+    /**
+     * The primary functionality of Parser. Will create a tree-structure
+     * of productions out of the regex string, and will tell those
+     * productions to create their respective NFAs. Will then retrieve
+     * top-level NFA.
+     */
     public void parse() {
-        // ... and thus begins recursion hell
+        // Makes the parse-tree
         regexTree = new VarRegex();
+        //
+        regexTree.makeNFA();
+        //
+        nfa = getParsedNFA();
     }
 
     public List<Character> getRegex() {
         return regex;
     }
 
-    public List<Character> getAlphabet() {
+    public Set<Character> getAlphabet() {
         return alphabet;
     }
 
-    public NFA getNFA() {
+    public NFA getParsedNFA() {
         return regexTree.getNFA();
     }
 }

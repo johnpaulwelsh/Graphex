@@ -7,6 +7,13 @@ package graphex;
  */
 public class Grep {
 
+    public static int stateName = 0;
+    public static char epsilon = 'ɛ';
+
+    public static String makeNextStateName() {
+        return "s" + stateName++;
+    }
+
     private static void withNfaFile(String[] args) {
 
     }
@@ -21,7 +28,7 @@ public class Grep {
 
     private static void withNoFiles(String[] args) {
         Parser p = new Parser(args[0]);
-        //p.learnAlphabet(args[1]);
+        p.learnAlphabet(args[1]);
         p.parse();
     }
 

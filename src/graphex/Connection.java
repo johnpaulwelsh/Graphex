@@ -9,10 +9,10 @@ package graphex;
  */
 public class Connection {
     private State fromState;
-    private String input;
+    private char  input;
     private State toState;
 
-    public Connection(State fromState, String input, State toState) {
+    public Connection(State fromState, char input, State toState) {
         this.fromState = fromState;
         this.input     = input;
         this.toState   = toState;
@@ -26,11 +26,11 @@ public class Connection {
         this.fromState = fromState;
     }
 
-    public String getInput() {
+    public char getInput() {
         return input;
     }
 
-    public void setInput(String input) {
+    public void setInput(char input) {
         this.input = input;
     }
 

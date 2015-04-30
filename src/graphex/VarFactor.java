@@ -24,11 +24,12 @@ public class VarFactor implements Variable {
 
     @Override
     public void makeNFA() {
-
+        base.makeNFA();
+        nfa = base.getNFA();
     }
 
     @Override
     public NFA getNFA() {
-        return null;
+        return this.nfa;
     }
 }

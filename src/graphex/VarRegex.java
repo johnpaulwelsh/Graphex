@@ -18,12 +18,13 @@ public class VarRegex implements Variable {
                 regex = new VarRegex();
             }
         }
-
     }
 
     @Override
     public void makeNFA() {
 //        nfa = combineBlockAndRegexNFA();
+        block.makeNFA();
+        nfa = block.getNFA();
     }
 
     @Override

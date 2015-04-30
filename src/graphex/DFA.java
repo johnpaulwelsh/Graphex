@@ -13,13 +13,13 @@ public class DFA extends NFA {
     private Set<State> states;
 
     public DFA(Set<State>       states,
-                Set<String>     alphabet,
+                Set<Character>  alphabet,
                 Set<Connection> transitionFunction,
                 State           startingState,
                 Set<State>      acceptStates) {
         super(states, alphabet, transitionFunction, startingState, acceptStates);
         // Take out the epsilons
-        alphabet.remove("epsilon");
+        alphabet.remove(Grep.epsilon);
         this.setAlphabet(alphabet);
     }
 
@@ -31,7 +31,7 @@ public class DFA extends NFA {
      * @param input the input character symbol for the connection
      * @return      the resulting state
      */
-    public State followTransition(State from, String input) {
+    public State followTransition(State from, char input) {
         Connection c = getTransitionFromStateWithInput(from, input);
         return c.getToState();
     }
@@ -49,9 +49,9 @@ public class DFA extends NFA {
      * @param input the input character symbol for the connection
      * @return      the connection that features these members
      */
-    public Connection getTransitionFromStateWithInput(State from, String input) {
+    public Connection getTransitionFromStateWithInput(State from, char input) {
         for (Connection c : this.getTransitionFunction()) {
-            if (c.getFromState().equals(from) && c.getInput().equals(input)) {
+            if (c.getFromState().equals(from) && (c.getInput() == input)) {
                 return c;
             }
         }
