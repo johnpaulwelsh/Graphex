@@ -10,7 +10,6 @@ import java.util.Set;
  * @author John Paul Welsh
  */
 public class DFA extends NFA {
-
     private Set<State> states;
 
     public DFA(Set<State>       states,

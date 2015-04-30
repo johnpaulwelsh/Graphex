@@ -21,7 +21,7 @@ public class Grep {
 
     private static void withNoFiles(String[] args) {
         Parser p = new Parser(args[0]);
-        p.learnAlphabet(args[1]);
+        //p.learnAlphabet(args[1]);
         p.parse();
     }
 

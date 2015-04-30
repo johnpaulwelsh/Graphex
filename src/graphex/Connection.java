@@ -12,7 +12,6 @@ public class Connection {
     private String input;
     private State toState;
 
-    // TODO For NFA, there could be duplicates in terms of only looking at fromState and input
     public Connection(State fromState, String input, State toState) {
         this.fromState = fromState;
         this.input     = input;

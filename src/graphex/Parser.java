@@ -19,6 +19,7 @@ public class Parser {
     public static List<Character> regex;
     private List<Character> alphabet;
     private VarRegex regexTree;
+    private NFA nfa;
 
     public Parser(String s) {
         String noDoubleStars = consolidateStars(s);
@@ -27,7 +28,6 @@ public class Parser {
             regex.add(c);
         }
         alphabet = new ArrayList<Character>();
-
     }
 
     public String consolidateStars(String s) {
@@ -40,7 +40,8 @@ public class Parser {
     public void learnAlphabet(String path) { // called from Grep
         try {
             int ch;
-            BufferedInputStream bis = new BufferedInputStream(new FileInputStream(path));
+            BufferedInputStream bis = new BufferedInputStream(
+                    new FileInputStream(path));
             while ((ch = bis.read()) >= 0) {
                 char chch = (char) ch;
                 if (!alphabet.contains(chch)) {
@@ -57,6 +58,7 @@ public class Parser {
     }
 
     public void parse() {
+        // ... and thus begins recursion hell
         regexTree = new VarRegex();
     }
 
@@ -71,15 +73,4 @@ public class Parser {
     public NFA getNFA() {
         return regexTree.getNFA();
     }
-
-    /*
-     * Regex  -> Block|Regex
-     *        -> Block
-     * Block  -> FactorBlock
-     *        -> Factor
-     * Factor -> Base*
-     *        -> Base
-     * Base   -> (Regex)
-     *        -> ASCII-character
-     */
 }
