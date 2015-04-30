@@ -11,11 +11,17 @@ public class VarBase implements Variable {
      */
     public VarBase() {
         if (Parser.regex.size() > 0) {
-            character = Parser.regex.get(0);
-            if (character == '(') {
+            char next = Parser.regex.get(0);
+
+            if (next == '(') {
+                Parser.regex.remove(0);
                 regex = new VarRegex();
+            } else if (next == ')') {
+                Parser.regex.remove(0);
+            } else {
+                character = next;
+                Parser.regex.remove(0); // #butwhatifRubyisbetter‽
             }
-            Parser.regex.remove(0);
         }
     }
 
