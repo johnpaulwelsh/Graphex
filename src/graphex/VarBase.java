@@ -55,7 +55,6 @@ public class VarBase implements Variable {
         // Otherwise, we do NOT have a character literal and therefore have
         // a grouping with a regex inside it.
         } else {
-            //this.character = Grep.epsilon;
             regex.makeNFA();
             this.nfa = regex.getNFA();
         }

@@ -4,10 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Class that can parse an input string
@@ -22,6 +19,7 @@ public class Parser {
     public static Set<Character> alphabet;
     private VarRegex regexTree;
     private NFA nfa;
+    private DFA dfa;
 
     public Parser(String s) {
         System.out.println(s);
@@ -64,9 +62,7 @@ public class Parser {
                     alphabet.add(chch);
                 }
             }
-
             alphabet.remove('\n');
-
             bis.close();
 
         } catch (FileNotFoundException fnf) {
@@ -96,6 +92,70 @@ public class Parser {
         for (State s : nfa.getAcceptStates()) {
             System.out.println("Accept: " + s.getName());
         }
+
+        dfa = translateNFAIntoDFA();
+    }
+
+    private DFA translateNFAIntoDFA() {
+
+        // The NFA's data
+        Set<State> nfaStates     = nfa.getStates();
+        Set<Connection> nfaConns = nfa.getTransitionFunction();
+        State nfaStartState      = nfa.getStartingState();
+        Set<State> nfaAccepts    = nfa.getAcceptStates();
+
+
+
+        Set<State> dfaStates = makePowerSetOfNFAStates(nfa.getStates());
+
+
+        Set<Connection> dfaConns = new HashSet<Connection>();
+
+
+        Set<State> dfaAccepts = new HashSet<State>();
+
+        State dfaStartState = null;
+        // TODO EVERYTHING
+        return new DFA(dfaStates, Parser.alphabet, dfaConns, dfaStartState, dfaAccepts);
+    }
+
+
+    /**
+     * TODO CHANGE THIS CODE SO IT DOESN'T LOOK LIKE I STOLE IT
+     *
+     * @param nfaStates the set of states for which we want the power set
+     * @return          the set of DFAStates that represent the power set
+     *                  of the NFAStates
+     */
+    private Set<State> makePowerSetOfNFAStates(Set<State> nfaStates) {
+
+        State[] stateArray = (State[]) nfaStates.toArray(new State[nfaStates.size()]);
+        Set<State> powerSet = new HashSet<State>();
+
+        int len = stateArray.length;
+        int elements = (int) Math.pow(2, len);
+
+        for (int i = 0; i < elements; i++) {
+
+            String str = Integer.toBinaryString(i);
+            int value = str.length();
+            String pset = str;
+
+            for (int k = value; k < len; k++) {
+                pset = "0" + pset;
+            }
+
+            Set<State> set = new HashSet<State>();
+
+            for (int j = 0; j < pset.length(); j++) {
+                if (pset.charAt(j) == '1')
+                    set.add(stateArray[j]);
+            }
+
+            powerSet.add(new DFAState(Grep.makeNextStateName(), set));
+        }
+
+        return powerSet;
     }
 
     public List<Character> getRegex() {

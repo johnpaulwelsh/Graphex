@@ -10,10 +10,10 @@ import java.util.Set;
  * @author John Paul Welsh
  */
 public class DFAState implements State {
-    private Set<NFAState> states;
+    private Set<State> states;
     private String name;
 
-    public DFAState(String name, Set<NFAState> states) {
+    public DFAState(String name, Set<State> states) {
         this.name   = name;
         this.states = states;
     }
@@ -26,11 +26,11 @@ public class DFAState implements State {
         this.name = name;
     }
 
-    public Set<NFAState> getStates() {
+    public Set<State> getStates() {
         return states;
     }
 
-    public void setStates(Set<NFAState> newStates) {
+    public void setStates(Set<State> newStates) {
         this.states = newStates;
     }
 }
