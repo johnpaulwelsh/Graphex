@@ -14,8 +14,8 @@ public class VarRegex implements Variable {
         if (Parser.regex.size() > 0) {
             char c = Parser.regex.get(0);
             if (c == '|') {
-                regex = new VarRegex();
                 Parser.regex.remove(0);
+                regex = new VarRegex();
             }
         }
 
