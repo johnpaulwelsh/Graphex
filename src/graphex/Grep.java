@@ -33,8 +33,10 @@ public class Grep {
     }
 
     private static void withNoFiles(String[] args) {
-        Parser p = new Parser(args[0]);
-        p.learnAlphabet(args[1]);
+        //Parser p = new Parser(args[0]);
+        Parser p = new Parser("(b)");
+        //p.learnAlphabet(args[1]);
+        p.learnAlphabet("dingo");
         p.parse();
     }
 

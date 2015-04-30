@@ -30,6 +30,7 @@ public class VarBlock implements Variable {
         // If we have a Block, we need to perform concatenation between
         // the Factor and the Block
         if (block != null) {
+            block.makeNFA();
             NFA blockNFA = block.getNFA();
 
             // The Factor's data

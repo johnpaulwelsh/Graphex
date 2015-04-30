@@ -31,6 +31,7 @@ public class VarRegex implements Variable {
         // If we have a Regex, then we need to perform union
         // on the Block and Regex
         if (regex != null) {
+            regex.makeNFA();
             NFA regexNFA = regex.getNFA();
 
             // The Block's data
@@ -78,8 +79,6 @@ public class VarRegex implements Variable {
         } else {
             this.nfa = blockNFA;
         }
-
-
     }
 
     @Override

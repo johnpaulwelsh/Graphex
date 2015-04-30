@@ -19,9 +19,11 @@ public class VarBase implements Variable {
             char next = Parser.regex.get(0);
 
             if (next == '(') {
+                this.character = Grep.epsilon;
                 Parser.regex.remove(0);
                 this.regex = new VarRegex();
             } else if (next == ')') {
+                this.character = Grep.epsilon;
                 Parser.regex.remove(0);
             } else {
                 this.character = next;
@@ -53,6 +55,7 @@ public class VarBase implements Variable {
         // Otherwise, we do NOT have a character literal and therefore have
         // a grouping with a regex inside it.
         } else {
+            //this.character = Grep.epsilon;
             regex.makeNFA();
             this.nfa = regex.getNFA();
         }

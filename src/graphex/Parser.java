@@ -24,6 +24,7 @@ public class Parser {
     private NFA nfa;
 
     public Parser(String s) {
+        System.out.println(s);
         String noDoubleStars = consolidateStars(s);
         regex = new ArrayList<Character>();
         for (char c : noDoubleStars.toCharArray()) {
@@ -88,6 +89,13 @@ public class Parser {
         regexTree.makeNFA();
         // Sets the parse-tree's NFA to be our NFA
         nfa = getParsedNFA();
+
+        for (Connection c : nfa.getTransitionFunction()) {
+            System.out.println(c);
+        }
+        for (State s : nfa.getAcceptStates()) {
+            System.out.println("Accept: " + s.getName());
+        }
     }
 
     public List<Character> getRegex() {
