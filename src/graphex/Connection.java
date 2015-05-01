@@ -43,6 +43,6 @@ public class Connection {
     }
 
     public String toString() {
-        return fromState.getName() + " -> " + input + " -> " + toState.getName();
+        return fromState.getName() + " -> " + toState.getName() + "[ label=\"" + input + "\"]";
     }
 }

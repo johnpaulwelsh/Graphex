@@ -36,10 +36,6 @@ public class DFA extends NFA {
         return c.getToState();
     }
 
-    //
-    // Specific Getters
-    //
-
     /**
      * Given a "from" state and a transition character, returns the
      * transition function that maps that state, through that character,

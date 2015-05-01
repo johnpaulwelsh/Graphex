@@ -19,7 +19,10 @@ public class Parser {
     public static Set<Character> alphabet;
     private VarRegex regexTree;
     private NFA nfa;
-    private DFA dfa;
+    private NFA dfa;
+    // A global null state for the DFA, so we don't waste states for every
+    // transition that ends up needing the null state.
+    public static State nullState;
 
     public Parser(String s) {
         System.out.println(s);
@@ -73,26 +76,29 @@ public class Parser {
     }
 
     /**
-     * The primary functionality of Parser. Will create a tree-structure
-     * of productions out of the regex string, and will tell those
-     * productions to create their respective NFAs. Will then retrieve
-     * top-level NFA.
+     * Will create a tree-structure of productions out of the regex string.
      */
     public void parse() {
-        // Makes the parse-tree (super recursion)
         regexTree = new VarRegex();
-        // Tell the parse-tree to make an NFA of itself (also super-recursion)
+    }
+
+    /**
+     * Will tell the productions to create their respective NFAs, and then
+     * retrieve the top-level NFA.
+     */
+    public void createNFA() {
         regexTree.makeNFA();
-        // Sets the parse-tree's NFA to be our NFA
         nfa = getParsedNFA();
+    }
 
-        for (Connection c : nfa.getTransitionFunction()) {
-            System.out.println(c);
-        }
-        for (State s : nfa.getAcceptStates()) {
-            System.out.println("Accept: " + s.getName());
-        }
+    public NFA getParsedNFA() {
+        return regexTree.getNFA();
+    }
 
+    /**
+     * Will translate the NFA into a DFA.
+     */
+    public void createDFA() {
         dfa = translateNFAIntoDFA();
     }
 
@@ -105,14 +111,21 @@ public class Parser {
         Set<State> nfaAccepts    = nfa.getAcceptStates();
 
         // The DFA's states represent the power set of the NFA's states
-        Set<DFAState> dfaStates = makePowerSetOfNFAStates(nfa.getStates());
+        Set<State> dfaStates = makePowerSetOfNFAStates(nfa.getStates());
+
+        // Find and hold onto the null state so we don't waste time and space
+        for (State s : dfaStates) {
+            if (s.getStates().isEmpty()) {
+                nullState = s;
+            }
+        }
 
         // The DFA's accept states include any DFAStates that have as a member
         // any of the NFA's accept states
-        Set<DFAState> dfaAccepts = new HashSet<DFAState>();
-        for (DFAState s : dfaStates) {
-            for (State x : nfaAccepts) {
-                if (s.getStates().contains(x)) {
+        Set<State> dfaAccepts = new HashSet<State>();
+        for (State s : dfaStates) {
+            for (State acc : nfaAccepts) {
+                if (s.getStates().contains(acc)) {
                     dfaAccepts.add(s);
                 }
             }
@@ -125,44 +138,64 @@ public class Parser {
         // connection.
         Set<Connection> dfaConns = new HashSet<Connection>();
 
+        for (State powerSetState : dfaStates) {
+            for (char c : Parser.alphabet) {
 
-        Set<State>
+                State toState = makeDFAState(powerSetState.getStates(), nfaConns);
 
+                Connection newConn;
+                if (toState.getName().equals("null")) {
+                    newConn = new Connection(powerSetState, c, Parser.nullState);
+                } else {
+                    newConn = new Connection(powerSetState, c, toState);
+                }
 
-        return null;
+                dfaConns.add(newConn);
+            }
+        }
+
+        // The DFA's start state is the DFAState that gets gotten to by following
+        // all epsilon transitions from the NFA's start state
+        Set<State> singleton = new HashSet<State>();
+        singleton.add(nfaStartState);
+        State dfaStart = makeDFAState(singleton, nfaConns);
+
+        return new DFA(dfaStates, Parser.alphabet, dfaConns, dfaStart, dfaAccepts);
     }
 
 
     /**
-     * TODO CHANGE THIS CODE SO IT DOESN'T LOOK LIKE I STOLE IT
+     * Given a set of states, will generate a set of DFAs representing the power
+     * set of the original set of states.
      *
      * @param nfaStates the set of states for which we want the power set
      * @return          the set of DFAStates that represent the power set
      *                  of the NFAStates
      */
-    private Set<DFAState> makePowerSetOfNFAStates(Set<State> nfaStates) {
+    private Set<State> makePowerSetOfNFAStates(Set<State> nfaStates) {
 
-        State[] stateArray = (State[]) nfaStates.toArray(new State[nfaStates.size()]);
-        Set<DFAState> powerSet = new HashSet<DFAState>();
+        State[] stateArray = nfaStates.toArray(new State[nfaStates.size()]);
+        Set<State> powerSet = new HashSet<State>();
 
         int len = stateArray.length;
-        int elements = (int) Math.pow(2, len);
+        int numElements = (int) Math.pow(2, len);
 
-        for (int i = 0; i < elements; i++) {
+        for (int i = 0; i < numElements; i++) {
 
             String str = Integer.toBinaryString(i);
             int value = str.length();
-            String pset = str;
+            String pwrSet = str;
 
             for (int k = value; k < len; k++) {
-                pset = "0" + pset;
+                pwrSet = "0" + pwrSet;
             }
 
             Set<State> set = new HashSet<State>();
 
-            for (int j = 0; j < pset.length(); j++) {
-                if (pset.charAt(j) == '1')
+            for (int j = 0; j < pwrSet.length(); j++) {
+                if (pwrSet.charAt(j) == '1') {
                     set.add(stateArray[j]);
+                }
             }
 
             powerSet.add(new DFAState(Grep.makeNextStateName(), set));
@@ -171,11 +204,66 @@ public class Parser {
         return powerSet;
     }
 
-    public List<Character> getRegex() {
-        return regex;
+    /**
+     * Given a set of fromStates and the transition function that might
+     * involve those states, return a DFAState consisting of all the
+     * states each of them can get to through either character transitions
+     * or epsilon transitions.
+     *
+     * @param fromStates   the states in question
+     * @param transitions the transition function from the automaton that this
+     *                    state belongs to
+     * @return            a DFAState
+     */
+    private State makeDFAState(Set<State> fromStates, Set<Connection> transitions) {
+        Set<State> results = new HashSet<State>();
+
+        // Finds all toStates by following all transitions where
+        // any of the fromStates is the parameter
+        for (State s : fromStates) {
+            for (Connection c : transitions) {
+                if (c.getFromState().equals(s)) {
+                    State toState = c.getToState();
+                    results.add(toState);
+                }
+            }
+        }
+
+        // For all of those result states, follow any epsilon transitions
+        // that they have and add those toStates to the results too.
+        // This updates the set as it goes so it should be exhaustive.
+        for (State resultState : results) {
+            for (Connection c : transitions) {
+                if (c.getFromState().equals(resultState) && c.getInput() == Grep.epsilon) {
+                    State toStateAfterEpsilon = c.getToState();
+                    results.add(toStateAfterEpsilon);
+                }
+            }
+        }
+
+        if (results.size() > 0) {
+            return new DFAState(Grep.makeNextStateName(), results);
+        } else {
+            return Parser.nullState;
+        }
+
     }
 
-    public NFA getParsedNFA() {
-        return regexTree.getNFA();
+    /**
+     * Given a line of text from the input file, returns whether the line
+     * matches the regular expression (determined by following the DFA).
+     * @param line the line of text in question
+     * @return     true if the regex matches on the line, false otherwise
+     */
+    public boolean dfaMatchesInput(String line) {
+        return false;
+    }
+
+    public NFA getNFA() {
+        return this.nfa;
+    }
+
+    public NFA getDFA() {
+        return this.dfa;
     }
 }
