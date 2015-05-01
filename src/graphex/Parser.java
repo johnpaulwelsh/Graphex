@@ -104,19 +104,32 @@ public class Parser {
         State nfaStartState      = nfa.getStartingState();
         Set<State> nfaAccepts    = nfa.getAcceptStates();
 
+        // The DFA's states represent the power set of the NFA's states
+        Set<DFAState> dfaStates = makePowerSetOfNFAStates(nfa.getStates());
 
+        // The DFA's accept states include any DFAStates that have as a member
+        // any of the NFA's accept states
+        Set<DFAState> dfaAccepts = new HashSet<DFAState>();
+        for (DFAState s : dfaStates) {
+            for (State x : nfaAccepts) {
+                if (s.getStates().contains(x)) {
+                    dfaAccepts.add(s);
+                }
+            }
+        }
 
-        Set<State> dfaStates = makePowerSetOfNFAStates(nfa.getStates());
-
-
+        // The DFA's connections are complicated. For each state,
+        // follow the connection to the second state, and check for any
+        // epsilon transitions from those to any other states. All of those
+        // final states will be in one DFAState: find it and use it as the end
+        // connection.
         Set<Connection> dfaConns = new HashSet<Connection>();
 
 
-        Set<State> dfaAccepts = new HashSet<State>();
+        Set<State>
 
-        State dfaStartState = null;
-        // TODO EVERYTHING
-        return new DFA(dfaStates, Parser.alphabet, dfaConns, dfaStartState, dfaAccepts);
+
+        return null;
     }
 
 
@@ -127,10 +140,10 @@ public class Parser {
      * @return          the set of DFAStates that represent the power set
      *                  of the NFAStates
      */
-    private Set<State> makePowerSetOfNFAStates(Set<State> nfaStates) {
+    private Set<DFAState> makePowerSetOfNFAStates(Set<State> nfaStates) {
 
         State[] stateArray = (State[]) nfaStates.toArray(new State[nfaStates.size()]);
-        Set<State> powerSet = new HashSet<State>();
+        Set<DFAState> powerSet = new HashSet<DFAState>();
 
         int len = stateArray.length;
         int elements = (int) Math.pow(2, len);

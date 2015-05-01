@@ -18,14 +18,17 @@ public class DFAState implements State {
         this.states = states;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public Set<State> getStates() {
         return states;
     }

@@ -1,5 +1,7 @@
 package graphex;
 
+import java.util.Set;
+
 /**
  * A class to represent a state in an NFA.
  *
@@ -12,11 +14,18 @@ public class NFAState implements State {
         this.name = name;
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public Set<State> getStates() {
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package graphex;
 
+import java.util.Set;
+
 /**
  * Interface for a state in a finite automaton.
  *
@@ -19,4 +21,10 @@ public interface State {
      * @param newName the new name for the state
      */
     void setName(String newName);
+
+    /**
+     *
+     * @return
+     */
+    Set<State> getStates();
 }
