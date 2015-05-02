@@ -167,6 +167,9 @@ public class Parser {
      * Given a set of states, will generate a set of DFAs representing the power
      * set of the original set of states.
      *
+     * This site helped me understand the problem:
+     * http://www.roseindia.net/tutorial/java/core/powerset.html
+     *
      * @param nfaStates the set of states for which we want the power set
      * @return          the set of DFAStates that represent the power set
      *                  of the NFAStates
@@ -245,7 +248,6 @@ public class Parser {
         } else {
             return Parser.nullState;
         }
-
     }
 
     /**
