@@ -22,24 +22,12 @@ public class Connection {
         return fromState;
     }
 
-    public void setFromState(State fromState) {
-        this.fromState = fromState;
-    }
-
     public char getInput() {
         return input;
     }
 
-    public void setInput(char input) {
-        this.input = input;
-    }
-
     public State getToState() {
         return toState;
-    }
-
-    public void setToState(State toState) {
-        this.toState = toState;
     }
 
     public String toString() {

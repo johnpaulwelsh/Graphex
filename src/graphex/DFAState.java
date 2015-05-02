@@ -32,8 +32,4 @@ public class DFAState implements State {
     public Set<State> getStates() {
         return states;
     }
-
-    public void setStates(Set<State> newStates) {
-        this.states = newStates;
-    }
 }

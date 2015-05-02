@@ -27,33 +27,8 @@ public class NFA {
         this.acceptStates       = acceptStates;
     }
 
-    //
-    // Specific Boolean Getters
-    //
-
-    public boolean hasInAcceptStates(State s) {
-        return states.contains(s);
-    }
-
-    public boolean hasAsStartState(State s) {
-        return startingState.equals(s);
-    }
-
-    public boolean hasInAlphabet(char a) {
-        return alphabet.contains(a);
-    }
-
-
     public Set<State> getStates() {
         return states;
-    }
-
-    public void setStates(Set<State> states) {
-        this.states = states;
-    }
-
-    public Set<Character> getAlphabet() {
-        return alphabet;
     }
 
     public void setAlphabet(Set<Character> alphabet) {
@@ -64,23 +39,11 @@ public class NFA {
         return transitionFunction;
     }
 
-    public void setTransitionFunction(Set<Connection> transitionFunction) {
-        this.transitionFunction = transitionFunction;
-    }
-
     public State getStartingState() {
         return startingState;
     }
 
-    public void setStartingState(State startingState) {
-        this.startingState = startingState;
-    }
-
     public Set<State> getAcceptStates() {
         return acceptStates;
-    }
-
-    public void setAcceptStates(Set<State> acceptStates) {
-        this.acceptStates = acceptStates;
     }
 }
