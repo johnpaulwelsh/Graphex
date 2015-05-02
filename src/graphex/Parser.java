@@ -25,7 +25,6 @@ public class Parser {
     public static State nullState;
 
     public Parser(String s) {
-        System.out.println(s);
         String noDoubleStars = consolidateStars(s);
         regex = new ArrayList<Character>();
         for (char c : noDoubleStars.toCharArray()) {

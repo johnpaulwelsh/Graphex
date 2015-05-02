@@ -54,7 +54,6 @@ public class Grep {
         }
 
         gv.addln(gv.end_graph());
-        System.out.println(gv.getDotSource());
 
         GraphViz.WriteGraphSource(gv, outputFile);
     }
