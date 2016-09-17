@@ -1,4 +1,4 @@
-package graphex;
+package graphex.java;
 
 import java.util.HashSet;
 import java.util.Set;

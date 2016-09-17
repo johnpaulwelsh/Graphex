@@ -1,4 +1,4 @@
-package graphex;
+package graphex.java;
 
 /**
  * Class to represent a connection between two states in

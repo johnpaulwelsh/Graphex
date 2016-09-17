@@ -1,4 +1,4 @@
-package graphex;
+package graphex.java;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
