@@ -1,4 +1,4 @@
-package graphex.java;
+package graphex;
 
 /**
  * A custom throwable exception that occurs when

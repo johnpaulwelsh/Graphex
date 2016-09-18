@@ -1,4 +1,4 @@
-package graphex.java;
+package graphex;
 
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;

@@ -1,4 +1,4 @@
-package graphex.java;
+package graphex;
 
 /**
  * An interface to give each production variable in the parsing

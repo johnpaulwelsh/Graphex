@@ -1,0 +1,10 @@
+digraph G {
+rankdir=LR;
+node [shape = none]; "";
+node [shape = doublecircle]; s1, s2;
+node [shape = circle];
+"" ->s2;
+s2 -> s0[ label="ɛ"];
+s0 -> s1[ label="a"];
+s1 -> s0[ label="ɛ"];
+}
